@@ -17,7 +17,7 @@ let appData = {
     expenses: {},
     optionalExpenses: {},
     income: [],
-    savings: false
+    savings: true
 };
 
 function chooseExpenses() {
@@ -33,14 +33,19 @@ function chooseExpenses() {
             console.log("bad result");
             i--;
         }
-}
+    }
 }
 chooseExpenses();
 
+function detectDayBudget() {
     appData.moneyPerDay = (appData.budget / 30).toFixed();  //округление до целого - 1 до первого знака, возвращает строку
 
     alert("Ежедневный бюджет: " + appData.moneyPerDay);
+}   
 
+detectDayBudget();
+
+function detectLevel() {
     if (appData.moneyPerDay < 100) {
         console.log("Минимальный уровнь достатка");
     } else if (appData.moneyPerDay > 100 && appData.moneyPerDay < 2000) {
@@ -50,12 +55,30 @@ chooseExpenses();
     } else {
         console.log("Произошла ошибка");
     }
+}  
 
-    function checkSavings() {
-        if (appData.savings == true) {
-            let save = +prompt("Какова сумма накоплений?"),
-                percent = +prompt("Под какой процент?");
+detectLevel();
 
-                appData.monthIncome = save/100/12*percent;
-        }
+
+
+function checkSavings() {
+    if (appData.savings == true) {
+        let save = +prompt("Какова сумма накоплений?"),
+            percent = +prompt("Под какой процент?");
+
+            appData.monthIncome = save/100/12*percent;    //объявление свойства объекта
+            alert("Доход в месяц с вашего депизита" + appData.monthIncome);
     }
+}
+checkSavings();
+
+function chooseOptExpenses() {
+
+    for(let i = 0; i < 3; i++) {
+        let questionOptExpenses = prompt("Статья необязательных расходов?");
+        appData.optionalExpenses[i] = questionOptExpenses;
+        console.log(appData.optionalExpenses);
+
+    }
+}
+chooseOptExpenses();
