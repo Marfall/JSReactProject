@@ -303,10 +303,147 @@ console.log(parseFloat(twelve)); // px отброшены
 
 isNan() - возвращает true, когда не цифры
 
+CallBack - функции:
+- это функция, которая должна быть выполнена после того как другая
+  функция завершила свое выполнение
+
+  в качестве аргумента любая функция может взять другую функцию!
 
 
+  function learnJS(lang, callback) {
+	  console.log("Я учу " + lang);
+	  callback();
+  }
+ 
+  learnJS("JavaScript", function() {
+	  console.log("Я прошел третий урок"); 
+  });
 
 
+  function done() {
+	  console.log("text");
+  }
+
+  learnJS("JavaScript", done);   //функция передана без круглой скобки
+
+  
+  Объекты:
+
+  Cоздание объекта:
+
+  let obj = new Object();    //обычно никто этим не пользуется
+
+  let options = {
+	  width: 1024,
+	  height: 1024,
+	  name: "test"
+  };
+
+  console.log(options.name);   //вывод свойства объекта
+
+  options.bool = false;       //записать новое свойство в объект
+
+  options.colors = {
+	  border: "black",
+	  background: red
+  };
+
+console.log(options);    //вывести весь объект
+
+Удаление свойств объекта:
+
+delete options.bool;      - удаление свойства
+
+Перебор свойств объекта циклом:
+
+for (let key in options) {
+	console.log('Свойство' + key + ' имеет значение' + options[key]);
+} 
+
+//Перечисление свойств с их значениями
+
+
+console.log(Object.keys(options).length);   // кол-во свойств
+
+
+Массивы и псевдомассивы:
+
+let arr = [1, 2, 3, 4 ,5];
+
+console.log(arr);
+
+arr.pop();      //удалить элемент с конца массива
+
+arr.push("5");  // добавить элемент в конец массива
+
+arr.shift();    //удалить элемент с начала
+
+arr.unshift("1");  //добавить элемент в начало массива
+
+
+for (let i = 0; i < arr.length; i++) {
+	console.log(arr[i]);
+}
+
+FOR-EACH: 
+
+arr.forEach(function(item, i, mass) {
+	console.log(i + ': ' + item + " (массив: " + mass + ',');
+});  
+
+Функция внутри forEach может принимать три аргумента:
+
+- item - каждый элемент массива
+
+- i  - номер элемента
+
+- сам массив , mass
+
+
+let mass = [1, 3, 4, 6, 7];
+
+for (let key in mass) {        //цикл for-in - получить ключи
+	console.log(key);
+}
+
+for (let key of mass) {    // получить значения
+	console.log(key);
+}
+
+
+let ans = prompt("", ""),
+	arr = [];
+
+arr = ans.split(',');  
+console.log(arr);
+
+- получение через запятую введенных пользователем данных в массив
+
+Взять массив и отправить одной строкой:
+
+let arr = ["a", 'zzz', 'ppp', sdf],
+	i = arr.join(', ');   //берет каждый элемент масива и склеивает 
+							в одну строку, разделенных 
+							запятой и пробелом.
+
+let arr = ["a", 'zzz', 'ppp'],
+	i = arr.sort();
+	console.log(arr);
+	
+Правильная сортировка:
+-необходимо передать callback-functon внутрь sort():
+
+let arr = [1,15,4],
+	i = arr.sort(compareNum);
+
+	function compareNum(a,b) {
+		return a-b;
+	}
+	console.log(arr);
+
+Псевдо-массив:
+
+-по структуре совпадает с массивом, но не обладает методами, свойственными полноценными массивами
 
 
 
