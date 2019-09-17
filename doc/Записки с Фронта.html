@@ -439,13 +439,27 @@ let arr = [1,15,4],
 	function compareNum(a,b) {
 		return a-b;
 	}
-	console.log(arr);
+	console.log(arr); 
 
 Псевдо-массив:
 
 -по структуре совпадает с массивом, но не обладает методами, свойственными полноценными массивами
 
+Объекты:
 
+let soldier = {
+	health: 400,
+	armor: 100
+};
+
+let john = {
+	health: 100
+};
+
+john.__proto__ = soldier;    //потомок
+
+console.log(john);
+console.log(john.armor);
 
 
 
