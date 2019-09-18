@@ -1,7 +1,9 @@
 'use strict';
 
 let money, time;
-
+function test() {
+    alert(null || 2 && 3 || 4);
+}
 function start() {
     money = +prompt ("Ваш бюджет на месяц?", "");
     time = prompt ("Введите дату в формате YYYY-MM-DD", "");
@@ -92,3 +94,6 @@ let appData = {
 for (let key in appData) {
     console.log("Наша программа включает в себя данные: " + key + " - " + appData[key]);
 }
+
+
+//console.log(x);
