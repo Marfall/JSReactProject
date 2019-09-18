@@ -598,6 +598,32 @@ Breakpoints:
 
 	Работа с WEB-страницами в JavaScript:
 
+	DOM - Document Object Model
+
+	 - Документ можно представить в виде дерева связанных между собой узлов.
+	 - Узлы связаны  отношениями родительский и дочерний.
+
+	 Родительский тег - HTML.
+
+	 Для того чтобы добраться до определенного элемента на странице в DOM 
+	 существуют специальные методы поиска
+
+	 Будем использовать встроенный в любой браузер объект - document.
+
+	 Методы document:
+
+	 1) getElementById()
+	
+	<div class="box" id="box"></div>
+
+	 let box = document.getElementById('box'),      -- внутри прописываем нужный id (box)
+	
+	 btn = document.getElementsByTagName('button');   -- получаем псевдомассив элементов
+
+	 console.log(box);
+	 console.log(btn);
+	 console.log(btn[0]);
+
 
 
 
