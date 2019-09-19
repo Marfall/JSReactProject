@@ -616,13 +616,152 @@ Breakpoints:
 	
 	<div class="box" id="box"></div>
 
+	<button> 1</button>
+	<button> 2</button>
+	<button> 3</button>
+	<button> 4</button>
+	<button> 5</button>
+
+	<div class="circle"></div>
+	<div class="circle"></div>
+	<div class="circle"></div>
+
 	 let box = document.getElementById('box'),      -- внутри прописываем нужный id (box)
-	
-	 btn = document.getElementsByTagName('button');   -- получаем псевдомассив элементов
+		 btn = document.getElementsByTagName('button'),   -- получаем псевдомассив элементов
+		 cirle = document.getElementsByClassName('circle'),  -- получаем псевдоколлекцию
+		 heart = document.querySelectorAll('heart'),
+		 oneHeart = document.querySelector('.heart');   -- первый элемент
 
 	 console.log(box);
 	 console.log(btn);
 	 console.log(btn[0]);
+	 console.log(circle[2]);
+     console.log(heart[1]);
+	 CSS - селекторы - это и классы,и id. и тэги, даже атрибуты и вложенность всего перечисленного
+
+	 Когда вы получаете клас через селектор, обязательно указывайте что это за селектор
+
+	Когда получаем класс через селектор , надо ставить точку,
+	если id - решетку,
+	атрибут - квадратные скобки.
+
+	Псевдомассив полученный через querySelectorAll имеет один метод - forEach;
+
+	Изменение стилей элементов:
+
+	box.style.backgroundColor = 'blue';    --изменить цвет элемента box
+
+	btn[1].style.borderRadius = '100%';
+
+	circle[0].style.backgroundColor = 'red';
+
+	Одинаовые действия над каждым элементом псевдо-массива:
+
+	for(let i = 0; i < heart.length; i++) {
+		heart[i].style.backGroundColor = 'blue';
+	} 
+
+	Аналог цикла:
+
+	heart.forEach(function(item, i, hearts) {
+		item.style.backgroundolor = 'blue';
+	});
+
+	Создание элементов на лету:
+
+	let div = document.createElement('div');
+	
+	console.log(div);
+
+	Создание текстовых узлов (элементов без оболочек тэга):
+
+	text = document.createTextNode('Тут был я');
+
+
+	div.calssList.add('black');  --имя класса, который мы хотим добавить элементу
+
+	toggle - позволяет переключать класс  в зависимости от каких-то действий
+
+	Любой элемент можно:
+	- вставить в конец, 
+	- вставить после определенного элемента,
+	- удалить,
+	- заменить
+
+	Но! Только по отношению к родителю.
+
+	Вставим div в конец body:
+
+	document.body.appendChild(div);   -- вставит элемент в конец body
+
+	console.log(text);
+
+
+	Создание родительского элемента для "heart":
+
+	<div class="wrapper">
+		<div class="heart"></div>	 -- дочерние тэги для wrapper
+		<div class="heart"></div>
+		<div class="heart"></div>
+	</div>
+
+	wrapper = document.querySelector('.wrapper');
+
+	wrapper.appendChild(div);      -- вставка div в конец wrapper
+	
+	document.body.insertBefore(div, circle[0]);   --что вставляем / перед чем вставляем
+
+	Если не указать второй параметр, метод саботает как appendChild
+
+	Удаление элемента со страницы:
+
+	document.body.removeChild(circle[1]);  -- удалит элемент
+	wrapper.removeChild(heart[1]);
+
+	Замена одного элемента другим:
+
+	document.body.replaceChild(btn[1], circle[1]);  
+	-- Новый элемент, который мы хотим поместить / То, что мы хотим заменить
+
+
+	Как добавлять текст и Html-код в элементы:
+
+	div.innerHTML = 'Hello World!';
+
+	div.innerHTML = '<h1>Hello World!</h1>';  - вставка HTML;
+
+	Чтобы быть уверенным, что от пользователя получен именно текст,
+	а не html или вредоносный скрипт:
+
+	div.textContent = 'Hello World!'; -- таким образл мы обезопасили страницу
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+
+
+
+
+
+
+
 
 
 
