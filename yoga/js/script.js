@@ -84,4 +84,82 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 
     setClock('timer', deadline);
+
+    //Modal
+
+    let more = document.querySelector('.more'),
+        overlay = document.querySelector('.overlay'),
+        close = document.querySelector('.popup-close');
+
+        more.addEventListener('click', function() {
+            overlay.style.display = 'block';
+            this.classList.add('more-splash');
+            document.body.style.overflow = 'hidden'; //запрет прокрутки страницы как только открывается модальное окно
+
+            close.addEventListener('click', function() {
+                overlay.style.display = 'none';
+                more.classList.remove('more-splash');
+                document.body.style.overflow = '';
+            });
+        });
+
+
+
+
+
 });
+
+
+// Второе задание
+
+// let age = document.getElementById('age');
+ 
+// function showUser(surname, name) {
+//          alert("Пользователь " + surname + " " + name + ", его возраст " + this.value);
+// }
+ 
+// showUser.apply(age, ["Горький","Максим"]);
+
+// let s = "abc";
+// function accum(s) {
+//     console.log(s);
+//     let res = "";
+//     for (let i = 0; i < s.length; i++) {
+        
+//         for (let j = 0; j <= i; j++) {
+//             if (j == 0) {
+//                 res = res + s[i].toUpperCase();
+//             } else {
+//                 res = res + s[i];
+//             }    
+            
+//         }
+//         if (i < s.length - 1) {
+//               res = res + '-';  
+//         }
+
+//         console.log(res);
+//     }
+// }
+// accum(s);
+
+// let s = "abc";
+// function accum(s) {
+//     let res = '';
+//     for (let i = 0; i < s.length; i++) {
+        
+//         for (let j = 0; j <= i; j++) {
+//             if (j == 0) {
+//                 res = res + s[i].toUpperCase();
+//             } else {
+//                 res = res + s[i];
+//             }    
+//          }
+//         if (i < s.length - 1) {
+//               res = res + '-';  
+//         }
+//     }
+
+//     return res;
+// }
+// console.log(accum(s));
