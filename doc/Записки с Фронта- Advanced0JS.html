@@ -71,7 +71,8 @@ HTTP-запросы:
 
         inputRub.addEventListener('input', () => {
             let request = new XMLHttpReaqest();               //главный объект для работы с ajax-запросами
-
+            
+        
             request.open('GET', 'js/current.json');          // настройка запроса к серверу
 
             request.setRequestHeader('Content-type', 'application/json; charset=utf-8');  //настройка http-запросов  контента
