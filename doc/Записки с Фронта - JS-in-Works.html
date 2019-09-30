@@ -379,13 +379,117 @@ btn.addEventListener('click', function() {
 	arr[7]();
 
 
+	#СТРЕЛОЧНЫЕ ФУНКЦИИ:
+
+	let fun = () => {
+		console.log(this);
+	}
+
+	fun();
+
+	- функция анонимна, у нее нет имени, ее можно только поместить в какую-то переменнную и тогда уже вызывать
+
+	- запускать функцию рекурсивно тоже нельзя (внутри себя)
+
+	- своего контекста вызова стрелочная функция не имеет,
+	  ее контекст вызова тот же , что и снаружи.
+
+
+	  let obj = {
+		  number : 5,
+		  sayNumber: function() {
+			  let say = () => {
+				  console.log(this);
+			  };
+
+			  say();
+		  }
+	  };
+
+	  obj.sayNumber();
+
+	  - если обычную функцию запустить внутри метода, она теряет свой контекст, 
+		а стрелочная берет контекст у родителя. 
+		
+		
+		let btn = document.querySelector('button');
+
+		btn.addEventListener('click', functon(){
+			let show = () => {
+				console.log(this);
+			};
+			show();
+		} );
+
+		// Такой код контекст вызова кнопки (контекст родителя)
 
 
 
+		#ПАРАМЕТРЫ ПО УМОЛЧАНИЮ:
 
+		function calcOrDouble(number, basis) {
+			basis = basis || 2;                  //так делали раньше - ES5
+			console.log(number*basis);
+		}
 
+		Мы хотим , чтобы параметр basis, если он не передан , по дефолту был = 2
+		- Параметр по умолчанию можно записывать прямо при объявлении функции
 
+		
+		calcOrDouble(3,5);
+		calcOrDouble(6);
 
+		function calcOrDouble(number, basis = 2) {       //Стандарт ES6 - прямо в объявлении функции
+		
+			console.log(number*basis);
+		}
+
+		
+		КЛАССЫ:
+
+		Каждый объект в JS имеет прототип, который является другим объектом.
+		Все объекты JS наследуют методы и свойтва от своего прототипа. 
+
+		class Rectangle {
+			constructor(height, width = 20) {
+				this.height = height;
+				this.width = width;
+			}
+			calcArea() {
+				return this.height * this.width;
+			}
+		}
+
+		const square = new Rectangle(10, 10);
+		const square = new Rectangle(10);       //отработает по умолчанию
+
+		console.log(square.calcArea());
+
+		
+		SPREAD-OPERATOR:
+
+		- оператор разворота
+
+		- разворачивает массив и превращает его просто в набор данных
+
+		let video = ['yputube', 'vimeo', 'rutube'],
+			blogs = ['wordpress', 'levejournal', 'blogger'],
+			internet = [...video, ...blogs, 'vk', 'facebook'];   
+
+		//  .... - развернет массив - покажет элементы
+
+		function log(a, b, c) {
+			console.log(a);
+			console.log(b);
+			console.log(c);
+		}
+
+		let numbers = [2, 5, 7];
+
+		log(...numbers)    // без 
+		log(...numbers)    // без spread-оператора не получится передать массив в развернутом виде
+
+		
 
 
 

@@ -1,0 +1,139 @@
+ЛОКАЛЬНЫЕ СЕРВЕРА:
+
+Сервер - это программа, позволяющая запускать web- сайты. 
+
+HTTP-запросы:
+
+    1) GET - запрос     - запрос на получение даных
+
+    2) POST - запрос    - постит какие-то данные на сервер
+
+    MAMP - сервер
+
+    htdocs  - позволяет загружать материалы для запуска на сервере
+
+
+  JSON - Java Script Object Notation
+    
+    - текстовый формат обмена данными
+
+    - набор пар ключ-значения
+
+
+    let otions = {
+        width: 1366;
+        height: 768'
+        background: 'red',
+        font: {
+            size: '16',
+            color: '#fff'
+        }
+    };
+
+    Теперь хотим отправить этот объект на сервер:
+
+    Два основных метода:
+
+        console.log(JSON.stringify(options));   - JSON.stringify() перевод объекта в JSON-формат
+
+            - JSON всегда в двойных кавычках
+
+        Для расшифровки JSON-а существует метод parse:
+
+        console.log(JSON.parse(JSON.stringify(options)));
+
+
+    AJAX: Asynchronous Javascript and XML
+
+        - В стандартном поведении баузер всегда отправляет и получает данные с сервера
+          с перезагрузкой страницы. 
+
+        AJAX:
+
+         - снимает нагрузку на сервер
+         - удобно - интерактивная обработка
+         - ускорение реакции интерфейса
+         - не перезагружаем странцу  каждый раз
+         - экономим трафик пользователя
+
+         минусы:
+
+            -обязательно должен быть включен JavaScript
+
+        
+        {
+            "usd": 68                  //current.json    - файл
+        }
+            
+        
+        let inputRub = document.getElementById('rub'),
+            inputUsd = document.getElementById('usd');
+
+        inputRub.addEventListener('input', () => {
+            let request = new XMLHttpReaqest();               //главный объект для работы с ajax-запросами
+
+            request.open('GET', 'js/current.json');          // настройка запроса к серверу
+
+            request.setRequestHeader('Content-type', 'application/json; charset=utf-8');  //настройка http-запросов  контента
+            
+            request.send();     //body - тело запроса = организовываем данные в body и отправляем на сервер
+
+
+            request.addEventListener('readyStatechange', function() {
+                if (request.readyState ===4 && request.status == 200) {     //если все в порядке
+                    let data = JSON.parse(request.respone);          //ответ от сервера
+
+                    inputUsd.value = inputRub.value / data.usd;              // делим на курс валют, который пришел с сервера
+                } else {
+                    inputUsd.value = "что-то пошло не так!";
+                }
+            })
+
+        })
+
+        Методы объекта XMLHttpRequest:
+
+    
+            method - метод общения с сервером
+            url     - путь к серверу
+            async   - асинхронность(по умолчанию true) - пока сервер не ответит не сможем взаимодействовать с сервером
+            login   - по необходимости
+            pass    - по неободимости
+
+
+        Свойства  объекта XMLHttpRequest:
+
+            status  - содержит код ответа сервера
+
+            statusText  - текстовое описание ответа сервера
+
+            responseText/response    - содержит текст ответа сервера (то, что хочет послать backend - разработчик)
+
+            readyState  - содержит текущее состоянии запроса (unsent, OPENED,HEADERS_RECIEVED, LOADING, DONE)
+
+
+
+    Специальные события объекта XMLHttpRequest:
+
+        LoadStart
+        Progress
+        Abort
+        TimeoutLoadEnd
+
+    
+    Событие LOAD - срабатывает когда запрос полностью загрузился без ошибок
+
+
+
+
+
+            
+
+
+
+
+
+
+
+
+
