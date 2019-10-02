@@ -103,10 +103,165 @@ window.addEventListener('DOMContentLoaded', function() {
             });
         });
 
+        // Form
+
+        let message = {
+            loading: 'Загрузка...',
+            success: 'Спасибо!  Скоро мы с вами свяжемся!',
+            failure: 'Что-то пошло не так...'
+
+        };
+
+        let form = document.querySelector('.main-form'),
+            input = form.getElementsByTagName('input'),
+            statusMessage = document.createElement('div');     //создаст div на странице
+
+            statusMessage.classList.add('status');             //стилизует div
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();                        //отменить стандартное поведение баузера на перезагрузку всей страницы при отправке формы
+                                                            //обработчик события вешается на фому,а не на кнопку
+
+                form.appendChild(statusMessage);            //оповещение пользователя - помещаем новый элемент в форму
+
+                let request = new XMLHttpRequest();
+                request.open('POST', 'server.php');
+                //request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');  //данные из формы
+                request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+
+                let formData = new FormData(form);      //получаем от пользователя все в объект FormData
+
+                let obj = {};
+
+                formData.forEach(function(value, key) {         // превращение в обычный объект (промежуточная операция)
+                    obj[key] = value;
+                });
+                
+                let json = JSON.stringify(obj);
+
+                request.send(json);      // отправляем объект на сервер в формате json
 
 
+               //request.send(formData);
+
+                request.addEventListener('readystatechange', function() {
+                    if (request.readyState < 4) {
+                        statusMessage.innerHTML = message.loading;
+                    }  else if (request.readyState === 4 && request.status == 200) {
+                        statusMessage.innerHTML = message.success;
+                    } else {
+                        statusMessage.innerHTML = message.failure;
+                    }
+                });
+                
+                    for (let i = 0; i < input.length; i++) {    //очистка input после submit формы
+                        input[i].value = '';
+                    }
+            });              
 
 
+            //Slider
+
+            let slideIndex  = 1,
+                slides = document.querySelectorAll('.slider-item'),
+                prev = document.querySelector('.prev'),
+                next = document.querySelector('.next'),
+                dotsWrap = document.querySelector('.slider-dots'),
+                dots = document.querySelectorAll('.dot');
+            
+            showSlides(slideIndex);
+
+            function showSlides(n) {
+
+                if (n > slides.length) {
+                    slideIndex = 1;                // к первому слайду
+                }
+
+                if (n < 1) {
+                    slideIndex = slides.length;   // к последнему слайду
+                }
+
+                slides.forEach((item) => item.style.display = 'none');    //скрыть слайды
+
+                // for(let i = 0; i < slides.lang; i++) {
+                //     slides[i].style.showSlides = 'none';
+                // }
+
+                dots.forEach((item) => item.classList.remove('dot-active'));   //удаляем класс
+
+                slides[slideIndex - 1].style.display = 'block';
+                dots[slideIndex - 1].classList.add('dot-active');
+            }
+
+            function plusSlides(n) {                
+                showSlides (slideIndex += n);          //перелистываем слайды вперед
+            }
+
+            function currentSlide(n) {
+                showSlides(slideIndex = n);
+            }
+
+            prev.addEventListener('click', function() {
+                plusSlides(-1);
+            });
+
+            next.addEventListener('click', function(){
+                plusSlides(1);
+            });
+
+            dotsWrap.addEventListener('click', function(event) {    //используем делегирование событий
+                for (let i = 0; i < dots.length + 1; i++) {
+                    if (event.target.classList.contains('dot') && event.target == dots[i-1]) {
+                        currentSlide(i);   
+                    }  
+                }
+            });   
+            
+            
+            //Calculator
+
+            let persons = document.querySelectorAll('.counter-block-input')[0],
+            restDays = document.querySelectorAll('.counter-block-input')[1],
+            place = document.getElementById('select'),
+            totalValue = document.getElementById('total'),
+            personsSum = 0,
+            daysSum = 0,
+            total = 0;
+
+        totalValue.innerHTML = 0;
+
+        persons.addEventListener('change', function() {
+            personsSum = +this.value;
+            total = (daysSum + personsSum)*4000;
+
+            if(restDays.value == '') {
+                totalValue.innerHTML = 0;
+            } else {
+                totalValue.innerHTML = total;
+            }
+        });
+
+        restDays.addEventListener('change', function() {
+            daysSum = +this.value;
+            total = (daysSum + personsSum)*4000;
+
+            if(persons.value == '') {
+                totalValue.innerHTML = 0;
+            } else {
+                totalValue.innerHTML = total;
+            }
+        });
+
+        place.addEventListener('change', function() {
+            if (restDays.value == '' || persons.value == '') {
+                totalValue.innerHTML = 0;
+            } else {
+                let a = total;
+                totalValue.innerHTML = a * this.options[this.selectedIndex].value;
+            }
+        });
+            
+   
 });
 
 
@@ -163,3 +318,24 @@ window.addEventListener('DOMContentLoaded', function() {
 //     return res;
 // }
 // console.log(accum(s));
+
+// class Options {
+// 	constructor(height, width, bg, fontSize, textAlign) {
+// 		this.height = height;
+// 		this.width = width;
+// 		this.bg = bg;
+// 		this.fontSize = fontSize;
+// 		this.textAlign = textAlign;
+// 	}
+
+// 	createDiv() {
+// 		let elem = document.createElement('div');
+// 		document.body.appendChild(elem);
+// 		let param = `height:${this.height}px; width:${this.width}px; background-color:${this.bg}; font-size:${this.fontSize}px; text-align:${this.textAlign}`;
+// 		elem.style.cssText = param;
+// 	}
+// }
+
+// const item = new Options(300, 350, "red", 14, "center");
+
+// item.createDiv();

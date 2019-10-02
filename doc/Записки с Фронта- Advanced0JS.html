@@ -124,11 +124,435 @@ HTTP-запросы:
     
     Событие LOAD - срабатывает когда запрос полностью загрузился без ошибок
 
+    
+    При отправке данных из формы обязательно должен стоять параметр name  
+    - именно из него будет формироваться ключ, а значениеуже введет пользователь
 
 
+ES6 PROMISE
 
+        - это обещания. если произошло что-то , то мы мы обещаем, что выполнится некое действие
 
+        - Когда выполняестя событие клика на какой-нибудь элемент, то вы хотите чтобы в 
+          данном случае произошло что-то другое - слудующее действие. Для этого мы постоянно
+          используем callback-и  - функции обратного вызова.
+
+          btn.addEventListener('click', function() {
+                alert("Что-то произошло");
+          });
+
+          let drink = 1;
+
+        function shoot(arrow, headshot, fail) {
+            console.log('Вы сделали выстрел...');
+
+            setTimeOut(function() {
+                Math.random() > .5 ? headshot({}) : fail("Вы промахнулись");
+            }, 3000)
+        };
+        
+        function win() {
+            console.log('Вы победили');
+            (drink == 1) ? buyBeer() : giveMoney();
+        }
+
+        function buyBeer() {
+            console.log('Вам купили пиво');
+        }
+
+        function giveMoney() {
+            console.log('Вам заплатили');
+        }
+
+        function loose() {
+            console.log('Вы проиграли');
+        }
+
+        shoot({},
+                function(mark) {
+                    console.log('Вы попали в цель!');
+                    win(mark, buyBeer, giveMoney);
+                }),
+                
+                function(miss) {
+                     console.error(miss);       
+                     loose();
+                }
+ 
             
+    Та же функция с использовнием Promise:
+
+
+
+
+    let drink = 1;
+
+    function shoot(arrow) {
+        console.log('Вы сделали выстрел...');
+    
+        let promise = new Promise(function(resolve, reject) {
+            setTimeOut(function() {
+                Math.random() > .5 ? resolve({}) : reject("Вы промахнулись");
+            }, 3000);
+        });
+
+        return promise;
+        
+    };
+    
+    function win() {
+        console.log('Вы победили');
+        (drink == 1) ? buyBeer() : giveMoney();
+    }
+
+    function buyBeer() {
+        console.log('Вам купили пиво');
+    }
+
+    function giveMoney() {
+        console.log('Вам заплатили');
+    }
+
+    function loose() {
+        console.log('Вы проиграли');
+    }
+
+    shoot({})
+            .then(mark => console.log('Вы попали в цель!'))
+            .then(win)
+            .catch(loose)
+
+
+
+
+LOCAL STORAGE:
+
+    - позволяет сохранять данные без БД
+
+    - встроенный в браузер браузер объект - который омжет хранить данные
+    - свойство глобального объекта window    -    window.localstotage
+    - этот объект уникален для каждого домена
+    - около 5Мб памяти
+
+
+    Команды:
+
+        - locaдStorage.setItem('number', 1);     -   записать ключ-значение
+
+        - localStorage.getItem('number');                -    вытянуть значение по ключу
+
+        - localStorage.removeItem('number');            - удалить по ключу
+
+        - localStorage.clear();                         - очистить хранилище
+        
+    АКТИВНЫЙ REMEMBER ME:
+
+    window.addEventListener("DOMCIntentLoaded", funtion() {
+        
+        let checkbox = document.getElementById('rememberMe'),
+            change = document.getElementyId("change"),
+            form = document.getElementByTagName("form")[0];
+
+        if (localStorage.getItem("isChecked") === "true") {
+            checkbox.checked = true;
+        }
+
+        if(localStorage.getItem("bg") === "changed") {
+            form.style.backgroundColor = "#FF4766";
+        }
+
+        checkbox.addEventListener("click", function() {
+            localStorage.setItem("isChecked", true);        //Был ли чекбокс отмечен
+        })
+
+        change.addEventListener("click", function() {
+            localStorage.setItem('bg', 'changed');
+        })
+
+        let persone = {
+            name: "Alex",
+            age: 25,
+            tech: ["mobile", "notebook"]                    //в таком виде получим object - надо сериализовать
+        }
+
+        let serializedPersone = JSON.stringify(person);    //конвертирование в JSON
+
+        localStorage.setItem("Alex", serializedPersone);   //сохранение JSON
+
+        console.log(JSON.parse(localStorage.getItem("Alex"));)     //возврат в обычный объект из JSON
+
+    } );
+
+
+
+    ОШИБКИ:  КАК ИЗБЕЖАТЬ ПОЛОМКИ КОДА:
+
+    try - catch - перехват ошибок
+
+
+let json = '{"id":2}';
+
+    try {
+        let user = JSON.parse(json);
+        console.log(user);
+
+        if (!user.name) {                     //самый простой способ проверить на наличие чего-либо
+            throw new Error ("В этих данных нет имени!");   // пишем сообщение, котрое будет в ошибке
+                                                            // то есть для каждого случая мы можем
+        }                                                   // написать вою ошибку
+    } catch(error) {
+        console.log(error.name);
+        console.log(error.message);
+        console.log(error.stack);
+    } finally {                                            // finally отработает всегда 
+        console.log('А я выполнюсь всегда!');                
+    }
+
+    - Если ошибок нет - блок catch игнорируется
+
+    - После это конструкции  код продолжит работу
+
+    Свойства объекта ошибки:
+
+    - error.name    - имя ошибки
+
+    - error.message  - описание ошибки
+
+    - error.stack    - набор вызовов , который привел к ошибке
+
+    console.log('Мы получили ошибку: ${error.name}');
+
+
+
+
+FRAMEWORKS  - JQUERY:
+
+<script>"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"</script>
+
+    - подключение JQUERY
+
+    :Получение элемента по ID:
+
+    native: documet.getElementById('btn');
+
+    jquery: $('#btn');        // $ берет все элементы подходящие под класс и производит действия
+
+    addEventListener  =     .on()
+
+    DOMContentLoaded  =     .ready()
+
+
+    В реальных проектах мы сначала указываем событие загрузки страницы:
+
+    $(document).ready(function() {
+        $('.list-itemЖашкые').hover(function {          //получаем только первый элемент и событие наведение
+            $(this).toggleClass('active');                         // при наведении добавляем класс элементу    
+        });                       
+
+        $('.list-item:eq(2)').on('click', function() {                          // получаем второй элемент
+            $('image:even').fadeToggle('slow');           // even - четный элемент, fadeToggle - штатная анимаця
+        }); 
+        
+        $('.list-item:eq(4)').on('click', function() {
+            $('image:odd').animate(
+                {
+                    opacity: 'toggle',
+                    height:  'toggle',
+                },3000
+            );      
+    });
+
+    //document.querySelectorAll('.list-item').forEach();
+    //$.ajax  - fetch
+
+
+
+    ANGULAR - самый тяжелый - 143кБ
+
+        1) Установить NodeJS , научиться работать с NPM- пакетами
+        2) TypeSript
+        3) Сборщик модулей - WebPack
+        4) Шаблон проектиования MVC
+        5) Сам Angular
+
+
+    REACT - библиотека 
+        
+        - node.js -> npm
+        - Babel - конвертер ES6 - ES5
+        - JSX
+        - REACT
+        - WebPack
+    
+    VIEW  - самая молодая библиотека
+        - node.js -> npm
+        - Babel 
+        - WebPack
+
+
+
+    Инкапсуляция:
+
+
+    function User(name, age) {
+        this.name = name;
+        let userAge  = age;
+    
+        this.say = function() {
+            alert('Имя пользователя ${this.name}, возраст: ${this.age}');
+        }
+
+        this.getAge = function() {
+            return userAge;
+        }
+
+        this.setAge = function(age) {
+            if (typeof age === 'number' && age >0 && age < 110) {
+                userAge = age;
+            } else {
+                console.log("Недопустимое значение");
+            }
+        }
+    }
+
+    let ivan = new User('Ivan', 25);
+    console.log(ivan.name);
+    console.log(ivan.age); 
+
+   
+    МОДУЛИ:
+
+    - модули самодостаточны и независимы;
+
+    - обеспечивают чистоту глобального пространства;
+
+    - глобальных переменных должно быть как можно меньше
+
+    
+    Анонимная самовызывающася функция:
+
+    let number = 1;
+
+    (function() {
+        let number = 2;
+        console.log(number);
+
+        return console.log(number + 3);
+    }()) 
+
+    consoe.log(number);
+
+    let user = (function() {
+        let private = function() {                      // переменная скрыта инкапсуляцией
+            console.log('I am private');
+        }
+                                                        // Объектный интерфейс
+        return {
+            sayHello: function() {
+                console.log('Hello!');
+            }
+        }
+    }())
+
+    console.log(user);
+    coonsole.log(user.sayHello());
+
+    // 3 Все методы изначально приватные
+
+
+    let user = (function() {
+        let private = function() {                      // переменная скрыта инкапсуляцией
+            console.log('I am private');
+        }
+
+        let  sayHello: function() {
+            console.log('Hello!');
+        }
+                                                        
+        return {
+          sayHello: sayHello                            // при помощи return приватный метод возвращается во внешний мир
+     
+        }
+    }())
+
+
+
+
+    WEB-PACK:
+
+    Файл script.js
+
+    function myModule() {
+        this.hello = function() {
+            return 'Hello!';
+        }
+        rhis.goodbue = function() {
+            return 'goodbye';
+        }
+    }
+
+    module.exports = myModule;    //экспортируем как конструкцию
+
+    Импорт в другом файле:
+
+    let myModule  = require(./script);   //кладет то что экмпортировали из другого файла (.js не прописываем )
+    
+    Теперь здесь лежит функция - конструктор
+
+    let module = new myModule();    //теперь можем вызывать
+
+    module.hello();
+    module.goodbue();
+
+
+
+    Теперь надо собрать эти два файла в один рабочий:
+
+
+    Для сборки модулей понадобится сторонний софт - WebPack:
+
+    Также существует сборщик проектов Browserify
+
+
+    ЭКСПОРТ ФУНКЦИЙ - синтаксис ES6:
+
+        1) export let one = 1;
+
+        2) let two = 2;
+        
+            export{two};
+
+            export function sayHi() {
+                console.log('Hi!');
+            }
+
+
+    ИМПОРТ ФУНКЦИЙ:
+
+            import {one, two} from './script';
+
+            Теперь можно их использовать:
+
+            console.log(one);
+
+
+     
+     Полезные ресуры:
+
+        -  Owl Carousel 2   - слайдеры
+
+        -  Slick  - слайдеры 
+
+        -  Fotorama, Gallereia
+
+        -  Универсальный Jquery- tabs - Script для блоков с вкладками
+        
+        -  Nisnom - сайт - агрегатор, желательно тестить оттуда на code-pen - e
+         
+        -  
+
+
+
 
 
 
